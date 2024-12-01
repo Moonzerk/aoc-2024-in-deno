@@ -1,0 +1,5 @@
+{
+  "name": "@moonzerk/aoc-utils",
+  "version": "0.0.1",
+  "exports": "./index.ts"
+}
