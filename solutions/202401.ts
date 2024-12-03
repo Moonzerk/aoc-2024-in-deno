@@ -1,10 +1,10 @@
 import run from '@moonzerk/aoc-runner'
-import { countOccurrences, distance, parseInput, sort, sum, zip } from '@moonzerk/aoc-utils'
+import { absoluteDifference, countOccurrences, parseInput, sort, sum, zip } from '@moonzerk/aoc-utils'
 
 function firstSolution(rawInput: string) {
   const listOfLocations = zip(...parseInput(rawInput, '   '))
   const sortedListOfLocations = listOfLocations.map((locations) => sort(locations.map(Number)))
-  const distances = zip(...sortedListOfLocations).map(([a, b]) => distance(a, b))
+  const distances = zip(...sortedListOfLocations).map(([a, b]) => absoluteDifference(a, b))
 
   return sum(...distances)
 }

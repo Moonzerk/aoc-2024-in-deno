@@ -1,5 +1,9 @@
-export function distance(a: number, b: number) {
+export function absoluteDifference(a: number, b: number) {
   return Math.abs(a - b)
+}
+
+export function between(x: number, inf: number, sup: number) {
+  return inf <= x && x <= sup
 }
 
 export function max(...values: number[]): number | undefined {
