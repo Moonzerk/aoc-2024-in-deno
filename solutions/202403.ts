@@ -1,30 +1,20 @@
 import run from '@moonzerk/aoc-runner'
 import { multiply, sum } from '@moonzerk/aoc-utils'
-// import { parseInput } from '@moonzerk/aoc-utils'
-
-const MULTIPLICATION_REGEX = /mul\((?<firstNumber>\d+),(?<secondNumber>\d+)\)/
-const CONDITIONAL_MULTIPLICATION_REGEX = /do\(\)(?:(?!don't\(\)).)*?mul\((?<firstNumber>\d+),(?<secondNumber>\d+)\)/
 
 function firstSolution(rawInput: string) {
-  const matchs = [...rawInput.matchAll(new RegExp(MULTIPLICATION_REGEX, 'gm'))]
+  const matchs = [...rawInput.matchAll(/mul\((?<firstNumber>\d+),(?<secondNumber>\d+)\)/gm)]
   const multiplications = matchs.map((match) => multiply(...Object.values(match.groups!).map(Number)))
 
   return sum(...multiplications)
 }
 
 function secondSolution(rawInput: string) {
-  const matchs = [...`do()${rawInput}`.matchAll(new RegExp(CONDITIONAL_MULTIPLICATION_REGEX, 'gm'))]
-  const multiplications = matchs.map((match) => multiply(...Object.values(match.groups!).map(Number)))
+  const input = `do()${rawInput}don't()`
 
-  return sum(...multiplications)
-  // const lines = parseInput(rawInput)
+  const matchs = [...input.matchAll(/do\(\)(.*?)don't\(\)/gms)]
+  const enabledParts = matchs.map(([, enabledPart]) => enabledPart)
 
-  // return lines.reduce((ttl, line) => {
-  //   const matchs = [...`do()${line}`.matchAll(new RegExp(CONDITIONAL_MULTIPLICATION_REGEX, 'g'))]
-  //   const multiplications = matchs.map((match) => multiply(...Object.values(match.groups!).map(Number)))
-
-  //   return ttl + sum(...multiplications)
-  // }, 0)
+  return firstSolution(enabledParts.join(''))
 }
 
 run(
