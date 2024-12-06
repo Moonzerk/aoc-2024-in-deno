@@ -1,6 +1,7 @@
 {
   "workspace": ["./packages/*", "./solutions/*"],
   "imports": {
-    "@std/cli": "jsr:@std/cli@^1.0.6"
+    "@std/cli": "jsr:@std/cli@^1.0.6",
+    "magic-regexp": "npm:magic-regexp@^0.8.0"
   }
 }
