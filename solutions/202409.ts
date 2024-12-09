@@ -1,23 +1,24 @@
 import run from '@moonzerk/aoc-runner'
 import { fill, swap } from '@moonzerk/aoc-utils'
-
-type Block = number | null
+import { performance } from 'node:perf_hooks'
 
 function firstSolution(rawInput: string) {
+  let start = performance.now()
   const disk = decompressDiskMap(rawInput.split('').map(Number))
-  const defragmentedDisk = defragmentDisk(disk)
+  console.log(`Step 1 : Uncompress => ${performance.now() - start}ms`)
 
-  // console.log(disk.map(b => b === null ? '.' : b).join(''))
-  // console.log(defragmentedDisk.map(b => b === null ? '.' : b).join(''))
+  start = performance.now()
+  defragmentDisk(disk)
+  console.log(`Step 2 : Defragment => ${performance.now() - start}ms`)
 
-  return computeChecksum(defragmentedDisk)
+  start = performance.now()
+  const checksum = computeChecksum(disk)
+  console.log(`Step 3 : Checksum calculation => ${performance.now() - start}ms`)
+
+  return checksum
 }
 
-// function secondSolution(rawInput: string) {
-//   return 1
-// }
-
-function decompressDiskMap(diskMap: number[]): Block[] {
+function decompressDiskMap(diskMap: number[]): (number | null)[] {
   const tmp = []
 
   for (let i = 0; i < diskMap.length; i++) {
@@ -27,27 +28,29 @@ function decompressDiskMap(diskMap: number[]): Block[] {
   return tmp
 }
 
-function defragmentDisk(disk: Block[]): Block[] {
-  const defragmentedDisk = [...disk]
-
+function defragmentDisk(disk: (number | null)[]): void {
   for (let i = disk.length - 1; i >= 0; i--) {
     if (disk[i] === null) {
       continue
     }
 
-    const j = defragmentedDisk.slice(0, i).indexOf(null)
+    const j = disk.findIndex((value) => value === null)
     if (j === -1) {
-      break
+      return
     }
 
-    swap(defragmentedDisk, i, j)
+    swap(disk, i, j)
   }
-
-  return defragmentedDisk
 }
 
-function computeChecksum(disk: Block[]): number {
-  return disk.reduce((ttl: number, value: Block, index: number) => ttl + Number(value) * index, 0)
+function computeChecksum(disk: (number | null)[]): number {
+  let ttl = 0
+  for (let i = 1; i < disk.length; i++) {
+    if (disk[i] === null) return ttl
+    ttl += i * disk[i]!
+  }
+
+  return 0
 }
 
 run(

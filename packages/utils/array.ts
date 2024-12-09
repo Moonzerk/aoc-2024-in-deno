@@ -26,11 +26,7 @@ export function sort<T>(array: T[], compareFn?: (a: T, b: T) => number) {
 
 // deno-lint-ignore no-explicit-any
 export function swap(array: any[], indexA: number, indexB: number) {
-  const valueA = array.at(indexA)
-  const valueB = array.at(indexB)
-
-  array[indexA] = valueB
-  array[indexB] = valueA
+  [array[indexA], array[indexB]] = [array[indexB], array[indexA]]
 }
 
 export function zip<T>(...arrays: T[][]) {
