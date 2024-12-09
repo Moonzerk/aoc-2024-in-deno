@@ -12,12 +12,25 @@ export function first<T>(array: T[]): T | undefined {
   return array.at(0)
 }
 
+export function fill<T>(value: T, length: number): T[] {
+  return [...Array(length)].map(() => value)
+}
+
 export function last<T>(array: T[]): T | undefined {
   return array.at(-1)
 }
 
 export function sort<T>(array: T[], compareFn?: (a: T, b: T) => number) {
   return array.toSorted(compareFn)
+}
+
+// deno-lint-ignore no-explicit-any
+export function swap(array: any[], indexA: number, indexB: number) {
+  const valueA = array.at(indexA)
+  const valueB = array.at(indexB)
+
+  array[indexA] = valueB
+  array[indexB] = valueA
 }
 
 export function zip<T>(...arrays: T[][]) {
