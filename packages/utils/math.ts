@@ -18,7 +18,6 @@ export function sum(...values: number[]): number {
   return values.reduce((ttl, value) => ttl + value, 0)
 }
 
-
 export function multiply(...numbers: number[]) {
   return numbers.reduce((ttl, n) => ttl * n, 1)
 }
