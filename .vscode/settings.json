@@ -2,5 +2,8 @@
   "deno.enable": true,
   "github.copilot.enable": {
     "*": false
-  }
+  },
+  "conventionalCommits.scopes": [
+    "runner"
+  ]
 }
