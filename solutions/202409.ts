@@ -66,6 +66,5 @@ run(
         expected: 1928,
       },
     ],
-    time: true,
   },
 )

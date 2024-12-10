@@ -90,7 +90,6 @@ run(
 //         expected: 3749,
 //       }
 //     ],
-//     time: true,
 //   },
   {
     solution,
@@ -108,6 +107,5 @@ run(
         expected: 11387,
       }
     ],
-    time: true,
   },
 )

@@ -26,7 +26,12 @@ run(
     solution: firstSolution,
     tests: [
       {
-        input: '3   4\n4   3\n2   5\n1   3\n3   9\n\n3   3',
+        input: `3   4
+4   3
+2   5
+1   3
+3   9
+3   3`,
         expected: 11,
       }
     ],
@@ -35,10 +40,14 @@ run(
     solution: secondSolution,
     tests: [
       {
-        input: '3   4\n4   3\n2   5\n1   3\n3   9\n\n3   3',
+        input: `3   4
+4   3
+2   5
+1   3
+3   9
+3   3`,
         expected: 31,
       }
     ],
-    time: true
   }
 )

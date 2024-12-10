@@ -26,7 +26,6 @@ run(
         expected: 161,
       },
     ],
-    time: true,
   },
   {
     solution: secondSolution,
@@ -36,6 +35,5 @@ run(
         expected: 48,
       },
     ],
-    time: true,
   },
 )

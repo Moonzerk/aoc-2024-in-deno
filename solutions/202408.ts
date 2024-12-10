@@ -80,7 +80,6 @@ run(
         expected: 14,
       }
     ],
-    time: true,
   },
 )
 
