@@ -27,14 +27,12 @@ function secondSolution(rawInput: string) {
   return 1
 }
 
-run(
-  {
-    solution: firstSolution,
-    tests: [
-      {
-        input: 'MMMSXXMASM\nMSAMXMSMSA\nAMXSXMAAMM\nMSAMASMSMX\nXMASAMXAMM\nXXAMMXXAMA\nSMSMSASXSS\nSAXAMASAAA\nMAMMMXMMMM\nMXMXAXMASX',
-        expected: 18,
-      }
-    ],
-  },
-)
+run({
+  solutions: [firstSolution, secondSolution],
+  tests: [
+    {
+      input: 'MMMSXXMASM\nMSAMXMSMSA\nAMXSXMAAMM\nMSAMASMSMX\nXMASAMXAMM\nXXAMMXXAMA\nSMSMSASXSS\nSAXAMASAAA\nMAMMMXMMMM\nMXMXAXMASX',
+      expected: [18, 1],
+    },
+  ],
+})

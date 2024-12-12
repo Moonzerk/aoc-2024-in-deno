@@ -5,13 +5,20 @@ export type ExecutionContext = {
   year: number
 }
 
-export type SolutionResult = string | number
-
 export type Solution = {
-  solution: (rawInput: string) => SolutionResult,
+  solution: (rawInput: string) => number,
   tests: {
     name?: string
     input: string
-    expected: SolutionResult
+    expected: number
   }[],
 }
+
+
+export type RunOptions = {
+  solutions: ((rawInput: string) => number)[];
+  tests: ({
+    input: string;
+    expected: number[];
+  })[];
+};

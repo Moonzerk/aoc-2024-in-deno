@@ -53,18 +53,16 @@ function computeChecksum(disk: (number | null)[]): number {
   return 0
 }
 
-run(
-  {
-    solution: firstSolution,
-    tests: [
-      {
-        input: `12345`,
-        expected: 60,
-      },
-      {
-        input: `2333133121414131402`,
-        expected: 1928,
-      },
-    ],
-  },
-)
+run({
+  solutions: [firstSolution],
+  tests: [
+    {
+      input: `12345`,
+      expected: [60],
+    },
+    {
+      input: `2333133121414131402`,
+      expected: [1928],
+    },
+  ],
+})

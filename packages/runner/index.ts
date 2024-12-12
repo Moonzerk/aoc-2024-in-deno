@@ -1,41 +1,51 @@
 import { readInput } from '@moonzerk/aoc-utils';
 import { parseArgs } from 'jsr:@std/cli/parse-args';
-import type { ExecutionContext, Solution } from './types.ts';
-import { performance } from 'node:perf_hooks'
+import { performance } from 'node:perf_hooks';
+import type { RunOptions } from './types.ts';
 
-async function runSolution({ solution, tests }: Solution, executionContext: ExecutionContext) {
-  if (executionContext.testMode) {
-    for (const test of tests) {
-      const start = performance.now()
-      const output = await solution(test.input)
-      const executionTime = performance.now() - start
-
-      console.log(`[${executionTime.toFixed(3)}ms] Test '${test.name ?? executionContext.part}' - Expected: ${test.expected}, got: ${output}`)
-    }
-  } else {
-    const rawInput = await readInput(executionContext.year, executionContext.day)
-    const start = performance.now()
-    const output = await solution(rawInput)
-    const executionTime = performance.now() - start
-
-    console.log(`[${executionTime.toFixed(3)}ms] Part ${executionContext.part} - Output: ${output}`)
-  }
-}
-
-async function run(...solutions: Solution[]) {
+async function run({ solutions, tests }: RunOptions) {
   const { submit } = parseArgs(Deno.args, { boolean: ['submit'], alias: { submit: 'S' } });
 
   const entryPoint = Deno.mainModule.split('/').at(-1)?.replace('.ts', '')
-  const executionContext = {
-    day: Number(entryPoint?.slice(4)),
-    part: 1,
-    testMode: !submit,
-    year: Number(entryPoint?.slice(0, 4)),
-  }
+  const [year, day] = [entryPoint?.slice(0, 4), entryPoint?.slice(4)].map(Number)
 
-  for (const solution of solutions) {
-    await runSolution(solution, executionContext)
-    executionContext.part++
+  /** @todo reorganize */
+  if (submit) {
+    const rawInput = await readInput(year, day)
+
+    for (let i = 0; i < solutions.length; i++) {
+      const solution = solutions[i];
+
+      const start = performance.now()
+      const output = await solution(rawInput)
+      const executionTime = (performance.now() - start).toFixed(3)
+
+      console.log(`P${i+ 1} [${executionTime}ms] : ${output}`)
+    }
+
+    /**
+     * @todo
+     * Read or create progress.json
+     *
+     * if the current day already has a result for the submited part :
+     * compare the output and the execution time
+     * else:
+     * submit with a POST the result
+     *  if the result is validated, edit progress.json (save result and exec time)
+     */
+  } else {
+    for (let i = 0; i < solutions.length; i++) {
+      const solution = solutions[i];
+
+      for (let j = 0; j < tests.length; j++) {
+        const test = tests[j]
+        const output = await solution(test.input)
+
+        const expected = test.expected[i]
+
+        console.log(`P${i+ 1} / T${j + 1} : output=${output} | expected=${expected}`)
+      }
+    }
   }
 }
 

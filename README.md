@@ -1,6 +1,6 @@
 # AoC 2024 in Deno
 
-Run a solution
+Run and submit solution
 ```sh
-deno run -A --env-file=.env solutions/2024xx.ts --testMode=true
+deno run -A --env-file=.env solutions/2024xx.ts -S
 ```

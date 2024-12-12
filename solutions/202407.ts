@@ -2,11 +2,11 @@ import run from '@moonzerk/aoc-runner';
 import { parseInput, sum } from '@moonzerk/aoc-utils';
 
 type Equation = { result: number; terms: number[] }
-// const operators = ['+', '*'] // part 1
-const operators = ['+', '*', '|'] // part 2
+
+type Operator = '+' | '*' | '|'
+const operators: Operator[] = []
 
 const combinaisons = new Map<number, string[]>()
-combinaisons.set(1, operators)
 
 function generateCombinaisons(x: number) {
   if (combinaisons.has(x)) {
@@ -55,47 +55,37 @@ function hasAtLeastOneSolution({ result, terms }: Equation): boolean {
   return false
 }
 
-function solution(rawInput: string) {
-  const equations = parseInput(rawInput).map((line) => {
-    const result = Number(line.slice(0, line.indexOf(':')))
-    const terms = line.slice(line.indexOf(':') + 2).split(' ').map(Number)
+function solution(availableOperators: Operator[]) {
+  return (rawInput: string) => {
+    combinaisons.clear()
+    combinaisons.set(1, availableOperators)
 
-    return {
-      result,
-      terms,
-    }
-  })
+    operators.length = 0
+    operators.push(...availableOperators)
 
-  return sum(
-    ...equations
-      .filter((equation) => hasAtLeastOneSolution(equation))
-      .map((equation) => equation.result)
-  )
+    const equations = parseInput(rawInput).map((line) => {
+      const result = Number(line.slice(0, line.indexOf(':')))
+      const terms = line.slice(line.indexOf(':') + 2).split(' ').map(Number)
+
+      return {
+        result,
+        terms,
+      }
+    })
+
+    return sum(
+      ...equations
+        .filter((equation) => hasAtLeastOneSolution(equation))
+        .map((equation) => equation.result)
+    )
+  }
 }
 
-run(
-//   {
-//     solution,
-//     tests: [
-//       {
-//         input: `190: 10 19
-// 3267: 81 40 27
-// 83: 17 5
-// 156: 15 6
-// 7290: 6 8 6 15
-// 161011: 16 10 13
-// 192: 17 8 14
-// 21037: 9 7 18 13
-// 292: 11 6 16 20`,
-//         expected: 3749,
-//       }
-//     ],
-//   },
-  {
-    solution,
-    tests: [
-      {
-        input: `190: 10 19
+run({
+  solutions: [solution(['+', '*']), solution(['+', '*', '|'])],
+  tests: [
+    {
+      input: `190: 10 19
 3267: 81 40 27
 83: 17 5
 156: 15 6
@@ -104,8 +94,7 @@ run(
 192: 17 8 14
 21037: 9 7 18 13
 292: 11 6 16 20`,
-        expected: 11387,
-      }
-    ],
-  },
-)
+      expected: [3749, 11387],
+    },
+  ],
+})

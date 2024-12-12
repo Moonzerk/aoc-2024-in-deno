@@ -60,12 +60,11 @@ function firstSolution(rawInput: string) {
   return 1
 }
 
-run(
-  {
-    solution: firstSolution,
-    tests: [
-      {
-        input: `............
+run({
+  solutions: [firstSolution],
+  tests: [
+    {
+      input: `............
 ........0...
 .....0......
 .......0....
@@ -77,11 +76,10 @@ run(
 .........A..
 ............
 ............`,
-        expected: 14,
-      }
-    ],
-  },
-)
+      expected: [14],
+    }
+  ],
+})
 
 
 /*
