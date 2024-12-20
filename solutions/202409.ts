@@ -1,21 +1,11 @@
 import run from '@moonzerk/aoc-runner'
 import { fill, swap } from '@moonzerk/aoc-utils'
-import { performance } from 'node:perf_hooks'
 
 function firstSolution(rawInput: string) {
-  let start = performance.now()
   const disk = decompressDiskMap(rawInput.split('').map(Number))
-  console.log(`Step 1 : Uncompress => ${performance.now() - start}ms`)
-
-  start = performance.now()
   defragmentDisk(disk)
-  console.log(`Step 2 : Defragment => ${performance.now() - start}ms`)
 
-  start = performance.now()
-  const checksum = computeChecksum(disk)
-  console.log(`Step 3 : Checksum calculation => ${performance.now() - start}ms`)
-
-  return checksum
+  return computeChecksum(disk)
 }
 
 function decompressDiskMap(diskMap: number[]): (number | null)[] {
