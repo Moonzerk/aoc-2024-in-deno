@@ -1,7 +1,8 @@
 {
   "imports": {
-    "@std/cli": "jsr:@std/cli@^1.0.6",
-    "magic-regexp": "npm:magic-regexp@^0.8.0"
+    "@moonzerk/aoc-runner": "./packages/runner/index.ts",
+    "@moonzerk/aoc-utils": "./packages/utils/index.ts",
+    "@std/cli": "jsr:@std/cli@^1.0.6"
   },
   "workspace": ["./packages/*", "./solutions/*"]
 }

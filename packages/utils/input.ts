@@ -26,5 +26,5 @@ export function parseInput(rawInput: string): string[]
 export function parseInput(rawInput: string, separator: string): string[][]
 export function parseInput(rawInput: string, separator?: string): string[] | string[][] {
   const lines = rawInput.replaceAll('\r', '').split('\n').filter(Boolean)
-  return separator ? lines.map((line) => line.split(separator)) : lines
+  return separator !== undefined ? lines.map((line) => line.split(separator)) : lines
 }
