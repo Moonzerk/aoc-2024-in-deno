@@ -1,24 +1,18 @@
-export type ExecutionContext = {
-  day: number
-  part: number
-  testMode: boolean
-  year: number
-}
+export type Solution = (rawInput: string) => number;
 
-export type Solution = {
-  solution: (rawInput: string) => number,
-  tests: {
-    name?: string
-    input: string
-    expected: number
-  }[],
-}
-
+export type Test = {
+  input: string;
+  expected: number[];
+};
 
 export type RunOptions = {
-  solutions: ((rawInput: string) => number)[];
-  tests: ({
-    input: string;
-    expected: number[];
-  })[];
+  solutions: Solution[];
+  tests: Test[];
 };
+
+export type Progress = Record<string, {
+  executionTime: number;
+  result: number;
+  createdAt: string;
+  updatedAt: string;
+}[]>;
